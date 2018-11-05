@@ -1,6 +1,6 @@
 {
-  "name": "telesocket",
-  "version": "0.0.1",
+  "name": "nodehooks",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "watch": "nodemon --exec \"npm run build && npm run start:dev\" --watch src --ext ts"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "body-parser": "^1.18.3",
     "decko": "^1.2.0",
