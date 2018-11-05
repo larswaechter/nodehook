@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <%- include('../components/metadata/metadata', {title: 'Nodehook | Home'}) %>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1>Nodehook</h1>
+        <h4>Node.js Express server for communication <br /> between webhooks and websockets</h4>
+
+        <div class="stepByStep">
+          <h2>Step by Step</h2>
+          <ol>
+            <li>Connect to websocket: <span>wss://nodehooks.herokuapp.com/api/websocket/listen</span> *</li>
+            <li>
+              Send POST Request to: <span>https://nodehooks.herokuapp.com/webhook/update/&lt;token&gt;</span>
+            </li>
+          </ol>
+          <p>
+            * a unique token in the request header is required (field name: "token")
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

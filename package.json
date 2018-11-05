@@ -1,0 +1,32 @@
+{
+  "name": "telesocket",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run start:prod",
+    "start:dev": "NODE_ENV=development node dist/index.js",
+    "start:prod": "NODE_ENV=production node dist/index.js",
+    "build": "rm -rf dist && tsc -p tsconfig.json",
+    "watch": "nodemon --exec \"npm run build && npm run start:dev\" --watch src --ext ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "decko": "^1.2.0",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "helmet": "^3.14.0",
+    "socket.io": "^2.1.1",
+    "ws": "^6.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^10.12.1",
+    "nodemon": "^1.18.5",
+    "prettier": "^1.14.3",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
+    "typescript": "^3.1.4"
+  }
+}
