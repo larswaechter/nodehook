@@ -4,26 +4,26 @@ import * as bodyParser from 'body-parser'
 import { createServer, Server as HttpServer } from 'http'
 import { Server as WebSocketServer, WebsocketConnection } from 'ws'
 import { EventEmitter } from 'events'
-import { resolve } from 'path'
 
 import { variables } from './config/globals'
 
-import { WebhookRoutes } from './modules/webhook/routes'
+// module routes
 import { RootRoutes } from './modules/root/routes'
+import { WebhookRoutes } from './modules/webhook/routes'
 
 export class Server {
   private readonly _app: express.Application = express()
   private readonly port: string | number = variables.port
+  private readonly wsEvents: EventEmitter = new EventEmitter()
   private server: HttpServer
   private wsServer: WebSocketServer
-  private wsEvents: EventEmitter = new EventEmitter()
   private wsSessions: object = {}
 
   public constructor() {
     this.server = createServer(this._app)
     this.wsServer = new WebSocketServer({
       server: this.server,
-      path: '/api/websocket/listen'
+      path: '/api/websocket'
     })
   }
 
@@ -44,8 +44,8 @@ export class Server {
 
     // set views and assets
     this.app.set('view engine', 'ejs')
-    this.app.set('views', resolve('views'))
-    this.app.use(express.static(resolve('public')))
+    this.app.set('views', 'views')
+    this.app.use(express.static('public'))
   }
 
   private initWebsocket(): void {
@@ -69,7 +69,9 @@ export class Server {
         console.log('Connection renewed: ' + token)
       }
 
-      // triggered from stream controller
+      /**
+       * triggered from webhook controller
+       */
       this.wsEvents.on('emitUpdate', data => {
         const _con: WebsocketConnection = this.wsSessions[data.token]
 
@@ -80,13 +82,23 @@ export class Server {
           console.log('Unknown connection: ' + data.token)
         }
       })
+
+      this.wsEvents.on('emitStop', data => {
+        const _con: WebsocketConnection = this.wsSessions[data.token]
+
+        if (_con !== undefined) {
+          _con.close()
+          delete this.wsSessions[data.token]
+          console.log('Connection closed: ' + token)
+        }
+      })
     })
 
-    // store events in app to access them from controller
+    // store events in express app to access them from controller
     this._app.wsEvents = this.wsEvents
   }
 
-  private initRoutes(): any {
+  private initRoutes(): void {
     this._app.use('/', new RootRoutes().router)
 
     // socket stream

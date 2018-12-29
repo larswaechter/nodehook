@@ -3,19 +3,37 @@ import { Request, Response, NextFunction } from 'express'
 
 export class WebhookController {
   @bind
-  public async handleWebhookEvent(
+  public handleWebhookEvent(
     req: Request,
     res: Response,
     next: NextFunction
-  ): Promise<any> {
+  ): any {
     try {
       // emit ws event
       req.app.wsEvents.emit('emitUpdate', {
-        token: req.params.key,
-        msg: 'New update for client: ' + req.params.key
+        token: req.params.token,
+        msg: 'New update for client: ' + req.params.token
       })
 
-      res.json({ status: res.statusCode, data: 'update received' })
+      return res.json({ status: res.statusCode, data: 'update received' })
+    } catch (err) {
+      return next(err)
+    }
+  }
+
+  @bind
+  public handleWebhookStop(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): any {
+    try {
+      // emit ws event
+      req.app.wsEvents.emit('emitStop', {
+        token: req.params.token
+      })
+
+      return res.json({ status: res.statusCode, data: 'webhook stopped' })
     } catch (err) {
       return next(err)
     }

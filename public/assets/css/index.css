@@ -1,34 +1,28 @@
 body {
-  background-color: #101419;
+  background-color: #d64550;
+  color: #eef4d4;
+}
+
+.navbar {
+  background-color: transparent;
 }
 
 .container {
-  margin-top: 120px;
+  margin-top: 180px;
+  text-align: center;
 }
 
 .container h1 {
-  color: #add9f4;
-  text-align: center;
+  color: #eef4d4;
   font-weight: bold;
 }
 
-.container h4 {
-  text-align: center;
+.container h5 {
   color: white;
   font-style: italic;
 }
 
-.container .stepByStep {
-  color: white;
-  margin-top: 50px;
-  text-align: center;
-}
-
-.container .stepByStep > ol {
-  display: inline-block;
-}
-
-.container .stepByStep > ol > li > span {
-  color: #add9f4;
-  font-style: italic;
+.container .links .github {
+  background-color: #1c2826;
+  color: #eef4d4;
 }

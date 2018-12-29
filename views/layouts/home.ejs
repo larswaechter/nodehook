@@ -1,33 +1,32 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <%- include('../components/metadata/metadata', {title: 'nodehooks | Home'})
+    %>
+  </head>
 
-<head>
-  <%- include('../components/metadata/metadata', {title: 'Nodehooks | Home'}) %>
-</head>
+  <body>
+    <%- include('../components/navigation/navbar') %>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h1>nodehooks</h1>
+          <h5>
+            Node.js express server for communication <br />
+            between webhooks and websockets
+          </h5>
 
-<body>
-  <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <h1>Nodehooks</h1>
-        <h4>Node.js Express server for communication <br /> between webhooks and websockets</h4>
-
-        <div class="stepByStep">
-          <h2>Step by Step</h2>
-          <ol>
-            <li>Connect to websocket: <span>wss://nodehooks.herokuapp.com/api/websocket/listen</span> *</li>
-            <li>
-              Send POST Request to: <span>https://nodehooks.herokuapp.com/webhook/update/&lt;token&gt;</span>
-            </li>
-          </ol>
-          <p>
-            * a unique token in the request header is required (field name: "token")
-          </p>
+          <div class="links mt-4">
+            <a
+              href="https://github.com/larswaechter/nodehooks"
+              class="btn btn-lg github"
+              target="_blank"
+            >
+              <i class="fab fa-github"></i> GitHub
+            </a>
+          </div>
         </div>
-
       </div>
     </div>
-  </div>
-</body>
-
+  </body>
 </html>

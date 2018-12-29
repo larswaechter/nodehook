@@ -14,7 +14,8 @@ export class RootRoutes {
     return this._router
   }
 
-  private initRoutes() {
+  private initRoutes(): void {
     this._router.get('/', this.controller.renderHome)
+    this._router.get('/howto', this.controller.renderHowTo)
   }
 }

@@ -24,7 +24,12 @@
     "label-position": true,
     "max-line-length": [true, 100],
     "max-classes-per-file": [true, 1],
-    "member-access": [true, "check-accessor", "check-constructor", "check-parameter-property"],
+    "member-access": [
+      true,
+      "check-accessor",
+      "check-constructor",
+      "check-parameter-property"
+    ],
     "member-ordering": [
       true,
       {
@@ -71,7 +76,13 @@
     "object-literal-sort-keys": false,
     "object-literal-shorthand": false,
     "ordered-imports": false,
-    "one-line": [true, "check-open-brace", "check-catch", "check-else", "check-whitespace"],
+    "one-line": [
+      true,
+      "check-open-brace",
+      "check-catch",
+      "check-else",
+      "check-whitespace"
+    ],
     "prefer-const": true,
     "quotemark": [true, "single"],
     "radix": true,
