@@ -12,7 +12,7 @@ export class WebhookController {
       // emit ws event
       req.app.wsEvents.emit('emitUpdate', {
         token: req.params.token,
-        msg: 'New update for client: ' + req.params.token
+        body: JSON.stringify(req.body)
       })
 
       return res.json({ status: res.statusCode, data: 'update received' })
@@ -22,18 +22,18 @@ export class WebhookController {
   }
 
   @bind
-  public handleWebhookStop(
+  public handleWebhookClose(
     req: Request,
     res: Response,
     next: NextFunction
   ): any {
     try {
       // emit ws event
-      req.app.wsEvents.emit('emitStop', {
+      req.app.wsEvents.emit('emitClose', {
         token: req.params.token
       })
 
-      return res.json({ status: res.statusCode, data: 'webhook stopped' })
+      return res.json({ status: res.statusCode, data: 'websocket closed' })
     } catch (err) {
       return next(err)
     }

@@ -49,6 +49,9 @@ export class Server {
   }
 
   private initWebsocket(): void {
+    /**
+     * new websocket connection -> store
+     */
     this.wsServer.on('connection', (con, req) => {
       const token: string = req.headers.token
 
@@ -59,42 +62,43 @@ export class Server {
       ) {
         // store new connection
         this.wsSessions[token] = con
-        console.log('New connection stored: ' + token)
+        console.log('New ws connection stored: ' + token)
       } else if (
+        this.wsSessions[token] !== undefined &&
         this.wsSessions[token].readyState !== this.wsSessions[token].OPEN
       ) {
         // user reconnected -> close old connection and store new one
         this.wsSessions[token].close()
         this.wsSessions[token] = con
-        console.log('Connection renewed: ' + token)
+        console.log('Ws connection renewed: ' + token)
       }
-
-      /**
-       * triggered from webhook controller
-       */
-      this.wsEvents.on('emitUpdate', data => {
-        const _con: WebsocketConnection = this.wsSessions[data.token]
-
-        if (_con !== undefined) {
-          _con.send(data.msg)
-          console.log('Event emitted: ' + data.msg)
-        } else {
-          console.log('Unknown connection: ' + data.token)
-        }
-      })
-
-      this.wsEvents.on('emitStop', data => {
-        const _con: WebsocketConnection = this.wsSessions[data.token]
-
-        if (_con !== undefined) {
-          _con.close()
-          delete this.wsSessions[data.token]
-          console.log('Connection closed: ' + token)
-        }
-      })
     })
 
-    // store events in express app to access them from controller
+    /**
+     * triggered from webhook controller
+     */
+    this.wsEvents.on('emitUpdate', data => {
+      const _con: WebsocketConnection = this.wsSessions[data.token]
+
+      if (_con !== undefined) {
+        _con.send(data.body)
+        console.log('Update emitted: ' + data.token)
+      } else {
+        console.error('Unknown connection: ' + data.token)
+      }
+    })
+
+    this.wsEvents.on('emitClose', data => {
+      const _con: WebsocketConnection = this.wsSessions[data.token]
+
+      if (_con !== undefined) {
+        _con.close()
+        delete this.wsSessions[data.token]
+        console.log('Connection closed: ' + data.token)
+      }
+    })
+
+    // store events in express app to make them accessible inside controllers
     this._app.wsEvents = this.wsEvents
   }
 

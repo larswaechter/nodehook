@@ -16,6 +16,6 @@ export class WebhookRoutes {
 
   private initRoutes(): void {
     this._router.post('/update/:token', this.controller.handleWebhookEvent)
-    this._router.post('/stop/:token', this.controller.handleWebhookStop)
+    this._router.post('/close/:token', this.controller.handleWebhookClose)
   }
 }
